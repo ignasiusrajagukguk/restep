@@ -7,15 +7,17 @@ import 'package:restep/common/widgets/separator_widget.dart';
 import 'dart:math' as math;
 
 import 'package:restep/config/app_asset.dart';
+import 'package:restep/presentation/screens/activity_log/activity_log.dart';
 import 'package:restep/presentation/screens/co2e_report/co2e_report_screen.dart';
 import 'package:restep/presentation/screens/details/index.dart';
+import 'package:restep/presentation/screens/login/index.dart';
 import 'package:restep/presentation/screens/my_bags/index.dart';
 import 'package:restep/presentation/screens/my_ordered_bag/index.dart';
 import 'package:restep/presentation/screens/promo_details/indes.dart';
-import 'package:restep/presentation/screens/redeemed_details/confirm_redemption.dart';
 import 'package:restep/presentation/screens/reward_catalog/index.dart';
 import 'package:restep/presentation/screens/settings/index.dart';
 import 'package:restep/presentation/screens/special_deals_list/index.dart';
+import 'package:restep/presentation/screens/support/index.dart';
 import 'package:restep/presentation/screens/tutorials/index.dart';
 import 'package:restep/presentation/widgets/points.dart';
 
@@ -107,11 +109,11 @@ class _ShipStep {
 }
 
 const _shipSteps = [
-  _ShipStep('Order\nplaced', BagOrderStatus.placed),
+  _ShipStep('Ordered', BagOrderStatus.placed),
   _ShipStep('Packed', BagOrderStatus.packed),
-  _ShipStep('Ready for\n pick up', BagOrderStatus.readyForPickup),
-  _ShipStep('Picked\nup', BagOrderStatus.placed),
-];  
+  _ShipStep('on the way', BagOrderStatus.readyForPickup),
+  _ShipStep('Ready for\n pick up', BagOrderStatus.delivered),
+];
 
 // ─── Widgets (paste into _DashboardScreenState) ───────────────────────────────
 
@@ -125,7 +127,7 @@ Widget buildBagOrdersSection(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'My bag orders',
+              'My Shopping Bag orders',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
@@ -423,20 +425,20 @@ Widget _metaCol(String label, String value) {
 final List<RewardItem> deals = [
   RewardItem(
     title: 'Last Chance Bakery – Verspillen? Liever Niet!',
-    description: 'Freshly baked goods from yesterday, still soft and tasty. Perfect for a quick bite or toast.',
+    description:
+        'Freshly baked goods from yesterday, still soft and tasty. Perfect for a quick bite or toast.',
     pts: 100,
     disc: 11,
-    imageUrl:
-        ImageAsset.bread,
+    imageUrl: ImageAsset.bread,
     bgColor: const Color(0xFFF3E8E8),
   ),
   RewardItem(
     title: 'Rescue Pack – Wij Redden Dit Eten Samen',
-    description: 'A bundle of products saved from being thrown away. Join us in reducing food waste',
+    description:
+        'A bundle of products saved from being thrown away. Join us in reducing food waste',
     pts: 2000,
     disc: 20,
-    imageUrl:
-        ImageAsset.sandwich,
+    imageUrl: ImageAsset.sandwich,
     bgColor: const Color(0xFFE8EFF3),
   ),
 ];
@@ -608,7 +610,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Special Deals Near You',
+                                'Bij Jou In De Buurt',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
@@ -672,7 +674,9 @@ class _DashboardScreenState extends State<DashboardScreen>
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ConfirmPromoRedemptionScreen()),
+            MaterialPageRoute(
+              builder: (context) => ConfirmPromoRedemptionScreen(),
+            ),
           );
         },
         child: Container(
@@ -1017,7 +1021,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.qr_code,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Show My QR',
           subtitle: 'Recent actions',
           value: 'activity',
@@ -1033,9 +1037,9 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.shopping_bag_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
-          title: 'My Bags',
-          subtitle: 'Recent actions',
+          iconColor: ConstColors.green,
+          title: 'My Shopping Bags',
+          subtitle: 'Circular bags',
           value: 'activity',
           onTap: () {
             Navigator.push(
@@ -1047,15 +1051,21 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.access_time_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Activity log',
           subtitle: 'Recent actions',
           value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ActivityLogScreen()),
+            );
+          },
         ),
         _buildPopupItem(
           icon: Icons.chat_bubble_outline,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Tutorials',
           subtitle: 'How to use',
           value: 'tutorials',
@@ -1069,7 +1079,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.eco,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'CO2E Report',
           subtitle: 'Your impact',
           value: 'activity',
@@ -1083,7 +1093,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.settings_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Settings',
           subtitle: 'Account, security',
           value: 'settings',
@@ -1097,14 +1107,14 @@ class _DashboardScreenState extends State<DashboardScreen>
         _buildPopupItem(
           icon: Icons.headset_mic_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Support',
           subtitle: 'Helpdesk',
           value: 'support',
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              MaterialPageRoute(builder: (context) => SupportScreen()),
             );
           },
         ),
@@ -1116,6 +1126,13 @@ class _DashboardScreenState extends State<DashboardScreen>
           subtitle: 'Sign out from app',
           titleColor: const Color(0xFFEF4444),
           value: 'signout',
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => true,
+            );
+          },
         ),
       ],
     ).then((value) {
@@ -1459,7 +1476,7 @@ class MyQRCodeModal extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  _buildInstructions(),
+                  buildInstructions(),
                 ],
               ),
             ),
@@ -1469,7 +1486,7 @@ class MyQRCodeModal extends StatelessWidget {
     );
   }
 
-  Widget _buildInstructions() {
+  Widget buildInstructions() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),

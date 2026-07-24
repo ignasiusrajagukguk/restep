@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restep/common/widgets/separator_widget.dart';
+import 'package:restep/presentation/screens/privacy_policy/index.dart';
+import 'package:restep/presentation/screens/settings/appearances.dart';
+import 'package:restep/presentation/screens/settings/change_password_screen.dart';
+import 'package:restep/presentation/screens/settings/language.dart';
+import 'package:restep/presentation/screens/settings/notification_setting_screen.dart';
+import 'package:restep/presentation/screens/settings/profile_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -16,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildAppBar(context),
-      
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
@@ -35,9 +41,30 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                     SeparatorWidget.height10(),
-                    menuWidget(Icons.notifications, 'Notifications', () {}),
-                    menuWidget(Icons.language_outlined, 'Languages', () {}),
-                    menuWidget(Icons.nightlight_outlined, 'Appearances', () {}),
+                    menuWidget(Icons.notifications, 'Notifications', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const NotificationSettingScreen(),
+                        ),
+                      );
+                    }),
+                    menuWidget(Icons.language_outlined, 'Languages', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const LanguageSettingScreen(),
+                        ),
+                      );
+                    }),
+                    menuWidget(Icons.nightlight_outlined, 'Appearances', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const AppearanceSettingScreen(),
+                        ),
+                      );
+                    }),
                     SeparatorWidget.height10(),
                     const Text(
                       'Accounts',
@@ -48,9 +75,30 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                     SeparatorWidget.height10(),
-                    menuWidget(Icons.person, 'Profile', () {}),
-                    menuWidget(Icons.lock, 'Change Password', () {}),
-                    menuWidget(Icons.security, 'Privacy & Security', () {}),
+                    menuWidget(Icons.person, 'Profile', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ProfileSettingScreen(),
+                        ),
+                      );
+                    }),
+                    menuWidget(Icons.lock, 'Change Password', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const ChangePasswordScreen(),
+                        ),
+                      );
+                    }),
+                    menuWidget(Icons.security, 'Privacy & Security', () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const PrivacyPolicyScreen(),
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),

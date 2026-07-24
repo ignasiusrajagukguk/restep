@@ -30,6 +30,7 @@ dependencies:
   dotted_border: ^2.1.0
   easy_stepper: ^1.0.1
   flutter_map_animations: ^0.6.0
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

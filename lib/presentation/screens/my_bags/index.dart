@@ -19,7 +19,7 @@ class MyBagsScreen extends StatelessWidget {
           centerTitle: true,
           leading: const BackButton(color: ConstColors.green),
           title: const Text(
-            "My Bags",
+            "My Shopping Bags",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
           ),
         ),
@@ -82,7 +82,7 @@ class MyBagsScreen extends StatelessWidget {
               const Icon(Icons.add, color: ConstColors.green, size: 18,),
               const SizedBox(width: 6),
               Text(
-                "Purchase Bag",
+                "Purchase Shopping Bags",
                 style: TextStyle(
                   color: ConstColors.green,
                   fontWeight: FontWeight.w600,

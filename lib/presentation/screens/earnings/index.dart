@@ -454,7 +454,7 @@ class EarningsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 const Text(
-                  'ESG pts',
+                  'Ecopunten',
                   style: TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
                 ),
               ],
@@ -499,7 +499,7 @@ class EarningsScreen extends StatelessWidget {
             ),
           ),
           const Text(
-            'Latest Earnings',
+            'Transactie Overzicht',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,

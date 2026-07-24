@@ -603,7 +603,7 @@ class _Co2eReportScreen2State extends State<Co2eReportScreen2>
             children: [
               const Text('Breakdown by category',
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
-              Text('See all',
+              Text('Meer',
                   style: const TextStyle(fontSize: 11, color: Color(0xFF1A6B35))),
             ],
           ),
@@ -787,7 +787,7 @@ class _Co2eReportScreen2State extends State<Co2eReportScreen2>
             child: ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.star_rounded, size: 16),
-              label: const Text('Recycle more & earn points'),
+              label: const Text('Recycle more & earn Ecopunten'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF1A6B35),
                 foregroundColor: Colors.white,

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/config/app_asset.dart';
@@ -19,7 +18,7 @@ class EarningDetailsScreen extends StatelessWidget {
         body: Column(
           children: [
             _buildAppBar(context),
-              
+
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -37,34 +36,44 @@ class EarningDetailsScreen extends StatelessWidget {
                           fit: StackFit.expand,
                           children: [
                             Container(
-                              decoration: const BoxDecoration(
+                              decoration: const BoxDecoration(),
+                              child: Image.asset(
+                                ImageAsset.dummyAsset1,
+                                fit: BoxFit.cover,
                               ),
-                              child: Image.asset(ImageAsset.dummyAsset1, fit: BoxFit.cover,),
                             ),
                           ],
                         ),
                       ),
                     ),
-              
+
                     const SizedBox(height: 20),
-              
-                    // ── Store name ──
-                    const Text(
-                      'PLUS Amsterdam',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: valueColor,
+
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: Image.asset(IconsAsset.plus, height: 12,),
                       ),
+                        Text(
+                          'PLUS Amsterdam',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 4),
                     const Text(
                       'Kinkerstraat 120, Amsterdam',
                       style: TextStyle(fontSize: 13, color: labelColor),
                     ),
-              
+
                     Divider(),
-              
+
                     // ── Details card ──
                     Container(
                       width: double.infinity,
@@ -94,9 +103,9 @@ class EarningDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-              
+
                     const SizedBox(height: 16),
-              
+
                     // ── Notes card ──
                     Container(
                       width: double.infinity,
@@ -117,13 +126,17 @@ class EarningDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          _BulletItem('Points are awarded based on eligible purchases'),
+                          _BulletItem(
+                            'Points are awarded based on eligible purchases',
+                          ),
                           const SizedBox(height: 6),
-                          _BulletItem('Each transaction can only be counted once'),
+                          _BulletItem(
+                            'Each transaction can only be counted once',
+                          ),
                         ],
                       ),
                     ),
-              
+
                     const SizedBox(height: 24),
                   ],
                 ),
@@ -136,50 +149,50 @@ class EarningDetailsScreen extends StatelessWidget {
   }
 }
 
-  Widget _buildAppBar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () => Navigator.maybePop(context),
-              child: Container(
-                width: 36,
-                height: 36,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.07),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.chevron_left_rounded,
-                  size: 24,
-                  color: Color(0xFF111111),
-                ),
+Widget _buildAppBar(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    child: Stack(
+      alignment: Alignment.center,
+      children: [
+        Align(
+          alignment: Alignment.centerLeft,
+          child: GestureDetector(
+            onTap: () => Navigator.maybePop(context),
+            child: Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.07),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Icon(
+                Icons.chevron_left_rounded,
+                size: 24,
+                color: Color(0xFF111111),
               ),
             ),
           ),
-          const Text(
-            'Earning Details',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF111111),
-            ),
+        ),
+        const Text(
+          'Transactie Details',
+          style: TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF111111),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 
 class _DetailRow extends StatelessWidget {
   final String icon;
@@ -202,9 +215,10 @@ class _DetailRow extends StatelessWidget {
           padding: EdgeInsets.all(6),
           decoration: BoxDecoration(
             color: ConstColors.grayLight,
-            borderRadius: BorderRadius.circular(100)
+            borderRadius: BorderRadius.circular(100),
           ),
-          child: Image.asset(icon, height: 16, color: const Color(0xFF8A8A8A))),
+          child: Image.asset(icon, height: 16, color: const Color(0xFF8A8A8A)),
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Text(
@@ -234,7 +248,10 @@ class _BulletItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('• ', style: TextStyle(fontSize: 14, color: Color(0xFF5A5A5A))),
+        const Text(
+          '• ',
+          style: TextStyle(fontSize: 14, color: Color(0xFF5A5A5A)),
+        ),
         Expanded(
           child: Text(
             text,

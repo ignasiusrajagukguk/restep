@@ -4,6 +4,7 @@ import 'package:restep/presentation/screens/dashboard/index.dart';
 import 'package:restep/presentation/screens/redeemed_details/confirm_redemption.dart';
 import 'package:restep/presentation/screens/reward_catalog/index.dart';
 import 'package:restep/presentation/screens/settings/index.dart';
+import 'package:restep/presentation/screens/support/index.dart';
 import 'package:restep/presentation/screens/welcome_screen/index.dart';
 
 final List<RewardItem> rewards = [
@@ -144,7 +145,7 @@ class _ShopScreenState extends State<ShopScreen> {
                           : const Center(
                               key: ValueKey('title'),
                               child: Text(
-                                'Shop',
+                                'Eco Winkel',
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700,
@@ -163,6 +164,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 ],
               ),
             ),
+
 
             // ── Category chips ───────────────────────────────────────────
             SizedBox(
@@ -195,6 +197,29 @@ class _ShopScreenState extends State<ShopScreen> {
                 },
               ),
             ),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(15,8,15,10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                    
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 5,
+                            children: [
+                              const Text(
+                                'Supported by:',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 10,
+                                ),
+                              ),
+                              Image.asset(ImageAsset.intersport, height: 10),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
 
             // ── Result count (shown while searching) ─────────────────────
             if (isSearching && searchQuery.isNotEmpty)
@@ -357,7 +382,7 @@ class _ShopScreenState extends State<ShopScreen> {
                         ),
                       ),
                       const Text(
-                        ' ESG pts',
+                        ' Ecopunten',
                         style: TextStyle(
                           fontSize: 8,
                           fontWeight: FontWeight.w500,
@@ -458,7 +483,7 @@ class _ShopScreenState extends State<ShopScreen> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              MaterialPageRoute(builder: (context) => SupportScreen()),
             );
           },
         ),

@@ -810,7 +810,7 @@ Widget _buildSpecialDealsSection() {
               /* navigate to all deals */
             },
             child: const Text(
-              'See more',
+              'Meer',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,

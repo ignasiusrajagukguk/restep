@@ -17,10 +17,7 @@ class BagDetailScreen extends StatelessWidget {
           leading: const BackButton(color: Colors.black),
           title: const Text(
             "Bag Details",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-            ),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
           ),
         ),
         body: Column(
@@ -33,7 +30,7 @@ class BagDetailScreen extends StatelessWidget {
                   children: [
                     _buildImage(),
                     const SizedBox(height: 16),
-      
+
                     /// Title
                     const Text(
                       "Premium Circular Bag",
@@ -42,26 +39,20 @@ class BagDetailScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-      
+
                     const SizedBox(height: 20),
-      
+
                     /// Info Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
-                        _InfoItem(
-                          title: "Date Ordered",
-                          value: "05 Jan 2026",
-                        ),
-                        _InfoItem(
-                          title: "Total Scans",
-                          value: "24x",
-                        ),
+                        _InfoItem(title: "Date Ordered", value: "05 Jan 2026"),
+                        _InfoItem(title: "Total Scans", value: "24x"),
                       ],
                     ),
-      
+
                     const SizedBox(height: 16),
-      
+
                     /// Points
                     const Text(
                       "Total Points Earned with this bag",
@@ -76,9 +67,9 @@ class BagDetailScreen extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-      
+
                     const SizedBox(height: 24),
-      
+
                     /// Usage History
                     const Text(
                       "Usage History",
@@ -87,9 +78,9 @@ class BagDetailScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-      
+
                     const SizedBox(height: 12),
-      
+
                     /// List
                     ...List.generate(
                       4,
@@ -102,7 +93,7 @@ class BagDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-      
+
             /// Bottom Button
             Padding(
               padding: const EdgeInsets.all(16),
@@ -120,7 +111,7 @@ class BagDetailScreen extends StatelessWidget {
                   child: const Text("View QR Code"),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -145,25 +136,16 @@ class _InfoItem extends StatelessWidget {
   final String title;
   final String value;
 
-  const _InfoItem({
-    required this.title,
-    required this.value,
-  });
+  const _InfoItem({required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: const TextStyle(color: Colors.grey, fontSize: 12),
-        ),
+        Text(title, style: const TextStyle(color: Colors.grey, fontSize: 12)),
         const SizedBox(height: 4),
-        Text(
-          value,
-          style: const TextStyle(fontWeight: FontWeight.w500),
-        ),
+        Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
       ],
     );
   }
@@ -192,7 +174,7 @@ class UsageItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             alignment: Alignment.center,
-            child: Image.asset(ImageAsset.shopping)
+            child: Image.asset(ImageAsset.shopping),
           ),
 
           const SizedBox(width: 12),
@@ -201,10 +183,23 @@ class UsageItem extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "PLUS Amsterdam",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: Image.asset(IconsAsset.plus, height: 12),
+                    ),
+                    Text(
+                      'PLUS Amsterdam',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 2),
                 Text(
@@ -216,11 +211,7 @@ class UsageItem extends StatelessWidget {
           ),
 
           /// Divider
-          Container(
-            height: 40,
-            width: 1,
-            color: Colors.grey.shade300,
-          ),
+          Container(height: 40, width: 1, color: Colors.grey.shade300),
 
           const SizedBox(width: 12),
 
@@ -242,7 +233,7 @@ class UsageItem extends StatelessWidget {
                 style: TextStyle(fontSize: 10, color: Colors.grey),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

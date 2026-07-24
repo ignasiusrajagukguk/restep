@@ -5,6 +5,7 @@ import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/config/app_asset.dart';
+import 'package:restep/presentation/screens/store_details/index.dart';
 
 // ─── pubspec.yaml dependencies needed ────────────────────────────────────────
 //
@@ -62,7 +63,7 @@ final List<ShopDeal> sampleShops = [
   ShopDeal(
     id: '1',
     name: 'PLUS Amsterdam',
-    distance: '0.3 km',
+    distance: '1.2 km',
     address: 'Kinkerstraat 120, Amsterdam',
     logoAsset: '',
     logoColor: const Color(0xFF4CAF50),
@@ -80,7 +81,7 @@ final List<ShopDeal> sampleShops = [
   ShopDeal(
     id: '2',
     name: 'PLUS Jordaan',
-    distance: '0.7 km',
+    distance: '1.7 km',
     address: 'Westerstraat 44, Amsterdam',
     logoAsset: '',
     logoColor: const Color(0xFF4CAF50),
@@ -97,7 +98,7 @@ final List<ShopDeal> sampleShops = [
   ShopDeal(
     id: '3',
     name: 'PLUS De Pijp',
-    distance: '1.2 km',
+    distance: '2.2 km',
     address: 'Ferdinand Bolstraat 88, Amsterdam',
     logoAsset: '',
     logoColor: const Color(0xFF4CAF50),
@@ -327,7 +328,7 @@ class _SpecialDealsScreenState extends State<SpecialDealsScreen>
             ),
           ),
           const Text(
-            'Special Deals Near You',
+            'Aanbiedingen Bij Jou In De Buurt',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -419,147 +420,169 @@ class _ShopCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.12),
-              blurRadius: 20,
-              offset: const Offset(0, -4),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Shop header
-              Row(
-                children: [
-                  Container(
-                    width: 60,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: const Color(0xFFE8E8E8),
-                        width: 1,
-                      ),
-                    ),
-                    child: Image.asset(ImageAsset.shopping, fit: BoxFit.cover),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          shop.name,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF1A1A1A),
-                            letterSpacing: -0.3,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${shop.distance} • ${shop.address}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF888888),
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF0F9F0),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.near_me_rounded,
-                          size: 12,
-                          color: Color(0xFF4CAF50),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          shop.distance,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFF4CAF50),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              const Divider(height: 1, color: Color(0xFFF0F0F0)),
-              const SizedBox(height: 10),
-
-              // First deal label
-              Row(
-                children: [
-                  Text(
-                    shop.deals.first.name,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF1A1A1A),
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    '${shop.deals.first.points} pts',
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF4CAF50),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '${shop.deals.first.originalPoints} pts',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Color(0xFFBBBBBB),
-                      decoration: TextDecoration.lineThrough,
-                      decorationColor: Color(0xFFBBBBBB),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-
-              // Product thumbnails row
-              SizedBox(
-                height: 56,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: shop.deals.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 8),
-                  itemBuilder: (context, i) {
-                    return _ProductThumbnail(deal: shop.deals[i]);
-                  },
-                ),
+      child: GestureDetector(
+        onTap: () {
+          
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          StoreDetailsScreen(),
+                                    ),
+                                  );
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.12),
+                blurRadius: 20,
+                offset: const Offset(0, -4),
               ),
             ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Shop header
+                Row(
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 52,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: const Color(0xFFE8E8E8),
+                          width: 1,
+                        ),
+                      ),
+                      child: Image.asset(ImageAsset.shopping, fit: BoxFit.cover),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            shop.name,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF1A1A1A),
+                              letterSpacing: -0.3,
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            '${shop.distance} • ${shop.address}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF888888),
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF0F9F0),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.near_me_rounded,
+                            size: 12,
+                            color: Color(0xFF4CAF50),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            shop.distance,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF4CAF50),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Divider(height: 1, color: Color(0xFFF0F0F0)),
+                const SizedBox(height: 10),
+        
+                // First deal label
+                Row(
+                  children: [
+                    Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                      Padding(
+                          padding: const EdgeInsets.only(right: 5.0),
+                          child: Image.asset(IconsAsset.plus, height: 12,),
+                        ),
+                        Text(
+                          shop.deals.first.name,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xFF1A1A1A),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${shop.deals.first.points} pts',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4CAF50),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${shop.deals.first.originalPoints} pts',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Color(0xFFBBBBBB),
+                        decoration: TextDecoration.lineThrough,
+                        decorationColor: Color(0xFFBBBBBB),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+        
+                // Product thumbnails row
+                SizedBox(
+                  height: 56,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: shop.deals.length,
+                    separatorBuilder: (_, __) => const SizedBox(width: 8),
+                    itemBuilder: (context, i) {
+                      return _ProductThumbnail(deal: shop.deals[i]);
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

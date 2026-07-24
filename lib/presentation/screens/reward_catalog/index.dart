@@ -33,14 +33,14 @@ final List<RewardItem> rewards = [
     title: 'Air Zoom Pegasus 41',
     description: 'Manufactured with verified recycled content.',
     pts: 2000,
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80',
+    imageUrl: ImageAsset.item1,
     bgColor: const Color(0xFFE8EFF3),
   ),
   RewardItem(
     title: 'Air Zoom Pegasus 41',
     description: 'Manufactured with verified recycled content.',
     pts: 2000,
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80',
+    imageUrl: ImageAsset.item1,
     bgColor: const Color(0xFFE8EFF3),
   ),
   RewardItem(
@@ -61,7 +61,7 @@ final List<RewardItem> rewards = [
     title: 'Air Zoom Pegasus 41',
     description: 'Manufactured with verified recycled content.',
     pts: 2000,
-    imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80',
+    imageUrl: ImageAsset.item1,
     bgColor: const Color(0xFFE8EFF3),
   ),
 ];
@@ -198,14 +198,9 @@ class RewardsCatalogScreen extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 color: item.bgColor,
-                child: Image.network(
+                child: Image.asset(
                   item.imageUrl,
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, __, ___) => const Icon(
-                    Icons.image,
-                    color: Color(0xFF9CA3AF),
-                    size: 40,
-                  ),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -251,7 +246,7 @@ class RewardsCatalogScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            ' ESG pts',
+                            ' Ecopunten',
                             style: const TextStyle(
                               fontSize: 8,
                               fontWeight: FontWeight.w500,

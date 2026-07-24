@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/common/widgets/separator_widget.dart';
+import 'package:restep/presentation/screens/about/index.dart';
+import 'package:restep/presentation/screens/contact_screen/index.dart';
+import 'package:restep/presentation/screens/faq_screen/index.dart';
+import 'package:restep/presentation/screens/help_screen/index.dart';
+import 'package:restep/presentation/screens/tutorials/index.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({super.key});
@@ -16,7 +21,7 @@ class SupportScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildAppBar(context),
-              
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
@@ -32,9 +37,28 @@ class SupportScreen extends StatelessWidget {
                     ),
                   ),
                   SeparatorWidget.height10(),
-                  menuWidget(Icons.help, 'Help', () {}),
-                  menuWidget(Icons.question_answer, 'FAQ', () {}),
-                  menuWidget(Icons.chat_bubble_outline_outlined, 'Contact Helpdesk', () {}),
+                  menuWidget(Icons.help, 'Help', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HelpScreen()),
+                    );
+                  }),
+                  menuWidget(Icons.question_answer, 'FAQ', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const FaqScreen()),
+                    );}),
+                  menuWidget(
+                    Icons.chat_bubble_outline_outlined,
+                    'Contact Helpdesk',
+                    () {
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ContactHelpdeskScreen()),
+                    );
+                    },
+                  ),
                   SeparatorWidget.height10(),
                   const Text(
                     'Other',
@@ -45,8 +69,23 @@ class SupportScreen extends StatelessWidget {
                     ),
                   ),
                   SeparatorWidget.height10(),
-                  menuWidget(Icons.integration_instructions_outlined, 'Tutorial', () {}),
-                  menuWidget(Icons.info_outline, 'About', () {}),
+                  menuWidget(
+                    Icons.integration_instructions_outlined,
+                    'Tutorial',
+                    () {
+
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+                    );
+                    },
+                  ),
+                  menuWidget(Icons.info_outline, 'About', () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const AboutScreen()),
+                    );}),
                 ],
               ),
             ),

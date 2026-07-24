@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/config/app_asset.dart';
 import 'package:restep/presentation/screens/dashboard/index.dart';
+import 'package:restep/presentation/screens/dashboard/newDashboard.dart';
 import 'package:restep/presentation/screens/points/index.dart';
 import 'package:restep/presentation/screens/qrcode/index.dart';
 import 'package:restep/presentation/screens/scanner/index.dart';
@@ -19,13 +20,19 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _screens = [
-    DashboardBody(), // index 0 – Home
-    RecycleBody(), // index 1 – Recycle
-    SizedBox(), // index 2 – Scan (FAB, no full screen)
-    PointsBody(), // index 3 – Points
-    ProfileBody(), // index 4 – Profile
+  List<Widget> get _screens => [
+    DashboardBody(winkelNavigation: winkelNavigation), // index 0 – Home
+    const RecycleBody(), // index 1 – Recycle
+    const SizedBox(), // index 2 – Scan (FAB, no full screen)
+    const PointsBody(), // index 3 – Points
+    const ProfileBody(), // index 4 – Profile
   ];
+
+  winkelNavigation() {
+    setState(() {
+      _selectedIndex = 4;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +69,13 @@ class _DashboardState extends State<Dashboard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _navItem(0, IconsAsset.home, 'Home', activeIconPath: IconsAsset.homeActive),
-          _navItem(1, IconsAsset.recycle, 'Nearby'),
+          _navItem(
+            0,
+            'Home',
+            activeIconPath: IconsAsset.homeActive,
+            iconPath: IconsAsset.home,
+          ),
+          _navItem(1, 'In De Buurt'),
           // Centre FAB
           GestureDetector(
             onTap: () => Navigator.push(
@@ -92,8 +104,18 @@ class _DashboardState extends State<Dashboard> {
               ),
             ),
           ),
-          _navItem(3, IconsAsset.points, 'Points', activeIconPath: IconsAsset.pointsActive),
-          _navItem(4, IconsAsset.cart, 'Shop',activeIconPath: IconsAsset.cartActive),
+          _navItem(
+            3,
+            'Ecopunten',
+            activeIconPath: IconsAsset.icPoint,
+            iconPath: IconsAsset.icPoint,
+          ),
+          _navItem(
+            4,
+            'Winkel',
+            activeIconPath: IconsAsset.cartActive,
+            iconPath: IconsAsset.cart,
+          ),
         ],
       ),
     );
@@ -101,8 +123,8 @@ class _DashboardState extends State<Dashboard> {
 
   Widget _navItem(
     int index,
-    String iconPath,
     String label, {
+    String? iconPath = '',
     String? activeIconPath,
   }) {
     final isActive = _selectedIndex == index;
@@ -114,16 +136,26 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              isActive ? activeIconPath ?? iconPath : iconPath,
-              height: 24,
-              color: isActive ? ConstColors.green : const Color(0xFF9CA3AF),
-            ),
+            iconPath != ''
+                ? Image.asset(
+                    isActive ? activeIconPath ?? iconPath! : iconPath!,
+                    height: 24,
+                    color: isActive
+                        ? ConstColors.green
+                        : const Color(0xFF9CA3AF),
+                  )
+                : Icon(
+                    Icons.map_outlined,
+                    size: 26,
+                    color: isActive
+                        ? ConstColors.green
+                        : const Color(0xFF9CA3AF),
+                  ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
-                fontSize: 11,
+                fontSize: 8,
                 fontWeight: FontWeight.w500,
                 color: isActive ? ConstColors.green : const Color(0xFF9CA3AF),
               ),
@@ -140,9 +172,11 @@ class _DashboardState extends State<Dashboard> {
 // The MainScreen provides the single bottom nav for all screens.
 
 class DashboardBody extends StatelessWidget {
-  const DashboardBody({super.key});
+  const DashboardBody({super.key, required this.winkelNavigation});
+  final Function() winkelNavigation;
   @override
-  Widget build(BuildContext context) => const DashboardScreen();
+  Widget build(BuildContext context) =>
+      NewDashboardScreen(winkelNavigation: winkelNavigation);
 }
 
 class RecycleBody extends StatelessWidget {

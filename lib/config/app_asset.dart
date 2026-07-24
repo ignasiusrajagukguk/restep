@@ -8,11 +8,12 @@ class AppAssetAnimations {
 
 class IconsAsset {
   static const logo = '${iconPath}logo.png';
-  static const logoName = '${iconPath}logo_name.png';
   static const facebook = '${iconPath}facebook.png';
   static const google = '${iconPath}google.png';
   static const profile = '${iconPath}profile.png';
   static const points = '${iconPath}points.png';
+  static const point = '${iconPath}point.png';
+  static const icPoint = '${iconPath}ic_point.png';
   static const home = '${iconPath}home.png';
   static const pointsActive = '${iconPath}points_active.png';
   static const homeActive = '${iconPath}home_active.png';
@@ -23,6 +24,7 @@ class IconsAsset {
   static const cart = '${iconPath}cart.png';
   static const cartActive = '${iconPath}cart_active.png';
   static const search = '${iconPath}search.png';
+  static const plus = '${iconPath}plus.png';
 }
 
 class ImageAsset {
@@ -57,6 +59,7 @@ class ImageAsset {
   static const tomatoes = '${imagePath}tomatoes.jpg';
   static const milk = '${imagePath}milk.jpg';
   static const broccoli = '${imagePath}broccoli.jpg';
+  static const intersport = '${imagePath}intersport.png';
 }
 
 

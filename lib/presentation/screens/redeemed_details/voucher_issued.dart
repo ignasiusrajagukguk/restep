@@ -112,7 +112,7 @@ class ProductPassportScreen extends StatelessWidget {
           Divider(height: 1, color: kDivider, indent: 48),
           _buildDetailRow(
             icon: Icons.monetization_on_outlined,
-            label: 'Points Redeemed',
+            label: 'Ecopunt Aangeschaft',
             value: '-100',
             valueColor: kRed,
           ),
@@ -166,10 +166,18 @@ class ProductPassportScreen extends StatelessWidget {
         _buildTimelineItem(
           isActive: true,
           isDone: true,
-          title: 'Voucher Issued',
+          title: 'Ordered',
           subtitle:
-              'Your voucher has been issued. It will be ready for pickup soon.',
+              'Your order has been placed. It will be packed soon.',
           timestamp: '13:28 1 April 2026',
+        ),
+        _buildTimelineItem(
+          isActive: true,
+          isDone: true,
+          title: 'On The Way',
+          subtitle:
+              'Your reward is on the way. It will ready for pick up soon.',
+          timestamp: '13:08 2 April 2026',
         ),
         _buildTimelineItem(
           isActive: true,
@@ -177,14 +185,14 @@ class ProductPassportScreen extends StatelessWidget {
           title: 'Ready for Pickup',
           subtitle:
               'Your reward is ready. Please collect it at the selected store.',
-          timestamp: '13:08 2 April 2026',
+          timestamp: '13:08 3 April 2026',
         ),
         _buildTimelineItem(
           isActive: true,
           isDone: true,
-          title: 'Redeemed',
+          title: 'Picked up',
           subtitle:
-              'Your reward has been successfully collected and completed.',
+              'Your order has been successfully picked up and completed.',
           isLast: true,
           timestamp: '11:00 4 April 2026',
         ),
@@ -394,7 +402,7 @@ class QRCodeModal extends StatelessWidget {
                   _buildCloseButton(context),
                   const SizedBox(height: 8),
                   const Text(
-                    'Voucher Issued',
+                    'Pick Up QR Code',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
@@ -415,7 +423,7 @@ class QRCodeModal extends StatelessWidget {
                   Image.asset(ImageAsset.dummyQr, height: 200),
                   const SizedBox(height: 16),
                   const Text(
-                    'Voucher Code',
+                    'Order code',
                     style: TextStyle(fontSize: 13, color: Color(0xFF6B6B6B)),
                   ),
                   const SizedBox(height: 4),

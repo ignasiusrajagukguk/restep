@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restep/common/constants/collors.dart';
-import 'package:restep/presentation/screens/co2e_report/index.dart';
+import 'package:restep/common/constants/collors.dart'; 
 
 
 class PeriodData {
@@ -499,7 +498,7 @@ class _Co2eReportScreenState extends State<Co2eReportScreen>
                       color: ConstColors.dark40,
                       fontSize: 15,
                       fontWeight: FontWeight.w600)),
-              const Text('See all ↗️',
+              const Text('Meer',
                   style: TextStyle(color: _green, fontSize: 13)),
             ],
           ),

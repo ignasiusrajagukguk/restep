@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/common/widgets/separator_widget.dart';
+import 'package:restep/config/app_asset.dart';
+import 'package:restep/presentation/screens/activity_log/activity_log.dart';
+import 'package:restep/presentation/screens/co2e_report/co2e_report_screen.dart';
 import 'package:restep/presentation/screens/dashboard/index.dart';
+import 'package:restep/presentation/screens/login/index.dart';
+import 'package:restep/presentation/screens/my_bags/index.dart';
+import 'package:restep/presentation/screens/notifications/index.dart';
 import 'package:restep/presentation/screens/settings/index.dart';
 import 'package:restep/presentation/screens/store_details/index.dart';
+import 'package:restep/presentation/screens/support/index.dart';
 import 'package:restep/presentation/screens/tutorials/index.dart';
 import 'package:restep/presentation/screens/welcome_screen/index.dart';
 
@@ -68,7 +75,7 @@ class _RecycleScreenState extends State<RecycleScreen> {
                 alignment: Alignment.center,
                 children: [
                   const Text(
-                    'Nearby',
+                    'In De Buurt',
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
@@ -101,19 +108,30 @@ class _RecycleScreenState extends State<RecycleScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
+                      InkWell(
+                        onTap: () {
+                          
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationsScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: ConstColors.white,
+                              width: 5,
+                            ),
                             color: ConstColors.white,
-                            width: 5,
                           ),
-                          color: ConstColors.white,
-                        ),
-                        padding: EdgeInsets.all(2),
-                        child: Icon(
-                          Icons.notifications_none_outlined,
-                          size: 35,
+                          padding: EdgeInsets.all(2),
+                          child: Icon(
+                            Icons.notifications_none_outlined,
+                            size: 35,
+                          ),
                         ),
                       ),
                       SeparatorWidget.width10(),
@@ -152,7 +170,7 @@ class _RecycleScreenState extends State<RecycleScreen> {
                     const Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 20, 14),
                       child: Text(
-                        'Nearby',
+                        'In De Buurt',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
@@ -213,33 +231,53 @@ class _RecycleScreenState extends State<RecycleScreen> {
         _buildPopupHeader(),
         _buildDividerItem(),
         _buildPopupItem(
-          icon: Icons.access_time_outlined,
+          icon: Icons.qr_code,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Show My QR',
           subtitle: 'Recent actions',
           value: 'activity',
-          onTap: (){
+          onTap: () {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (_) => const MyQRCodeModal(),
             );
-          }
+          },
+        ),
+        _buildPopupItem(
+          icon: Icons.shopping_bag_outlined,
+          iconBg: const Color(0xFFD1FAE5),
+          iconColor: ConstColors.green,
+          title: 'My Shopping Bags',
+          subtitle: 'Circular bags',
+          value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyBagsScreen()),
+            );
+          },
         ),
         _buildPopupItem(
           icon: Icons.access_time_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Activity log',
           subtitle: 'Recent actions',
           value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ActivityLogScreen()),
+            );
+          },
         ),
         _buildPopupItem(
           icon: Icons.chat_bubble_outline,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Tutorials',
           subtitle: 'How to use',
           value: 'tutorials',
@@ -251,9 +289,23 @@ class _RecycleScreenState extends State<RecycleScreen> {
           },
         ),
         _buildPopupItem(
+          icon: Icons.eco,
+          iconBg: const Color(0xFFD1FAE5),
+          iconColor: ConstColors.green,
+          title: 'CO2E Report',
+          subtitle: 'Your impact',
+          value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Co2eReportScreen2()),
+            );
+          },
+        ),
+        _buildPopupItem(
           icon: Icons.settings_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Settings',
           subtitle: 'Account, security',
           value: 'settings',
@@ -267,14 +319,14 @@ class _RecycleScreenState extends State<RecycleScreen> {
         _buildPopupItem(
           icon: Icons.headset_mic_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Support',
           subtitle: 'Helpdesk',
           value: 'support',
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              MaterialPageRoute(builder: (context) => SupportScreen()),
             );
           },
         ),
@@ -286,6 +338,13 @@ class _RecycleScreenState extends State<RecycleScreen> {
           subtitle: 'Sign out from app',
           titleColor: const Color(0xFFEF4444),
           value: 'signout',
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => true,
+            );
+          },
         ),
       ],
     ).then((value) {
@@ -497,7 +556,10 @@ class _RecycleScreenState extends State<RecycleScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(Icons.add, size: 18),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: Image.asset(IconsAsset.plus, height: 12,),
+                      ),
                       const Text(
                         'PLUS',
                         style: TextStyle(

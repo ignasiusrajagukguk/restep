@@ -36,7 +36,7 @@ class ConstColors {
   // static const greenMint = Color(0xFF4fbec8);
   static const greenLight = Color(0xFF80D0D7);
   static const greenLight10 = Color.fromARGB(255, 79, 205, 216);
-  static const green = Color(0xFF04684B);
+  static const green = Color(0xFF80BD1D);
 
   static const greenCustom = Color(0xFFD0FE6F);
   static const blueFill = Color(0xffF2FBFF);

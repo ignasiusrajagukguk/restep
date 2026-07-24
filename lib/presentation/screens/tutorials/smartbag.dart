@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
+import 'package:restep/config/app_asset.dart';
 
 class OnboardingSmartBagPage extends StatelessWidget {
   const OnboardingSmartBagPage({super.key});
@@ -217,10 +218,24 @@ class BagLogRow extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(color: ConstColors.dark40),
-          ),
+          child: 
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(right: 5.0),
+                        child: Image.asset(IconsAsset.plus, height: 12,),
+                      ),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
         ),
         Text(
           points,

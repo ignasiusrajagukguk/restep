@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:restep/common/constants/collors.dart';
 import 'package:restep/common/widgets/separator_widget.dart';
 import 'package:restep/config/app_asset.dart';
-import 'package:restep/presentation/screens/dashboard/index.dart';
+import 'package:restep/presentation/screens/activity_log/activity_log.dart';
+import 'package:restep/presentation/screens/co2e_report/co2e_report_screen.dart';
+import 'package:restep/presentation/screens/dashboard/newDashboard.dart'
+   ;
 import 'package:restep/presentation/screens/earning_details/index.dart';
 import 'package:restep/presentation/screens/earnings/index.dart';
+import 'package:restep/presentation/screens/login/index.dart';
+import 'package:restep/presentation/screens/my_bags/index.dart';
+import 'package:restep/presentation/screens/my_ordered_bag/index.dart'
+    hide BagOrderStatus, BagOrder;
+import 'package:restep/presentation/screens/notifications/index.dart';
 import 'package:restep/presentation/screens/redeemed/index.dart';
 import 'package:restep/presentation/screens/redeemed_details/confirm_redemption.dart';
 import 'package:restep/presentation/screens/redeemed_details/voucher_issued.dart';
 import 'package:restep/presentation/screens/reward_catalog/index.dart';
 import 'package:restep/presentation/screens/settings/index.dart';
+import 'package:restep/presentation/screens/support/index.dart';
 import 'package:restep/presentation/screens/tutorials/index.dart';
 import 'package:restep/presentation/screens/welcome_screen/index.dart';
 import 'package:restep/presentation/widgets/points.dart';
@@ -37,7 +46,7 @@ class _PointsScreenState extends State<PointsScreen> {
                 alignment: Alignment.center,
                 children: [
                   const Text(
-                    'ESG Points',
+                    'Ecopunten',
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
@@ -66,23 +75,34 @@ class _PointsScreenState extends State<PointsScreen> {
                       ),
                     ),
                   ),
-              
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
+                      InkWell(
+                        onTap: () {
+                          
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NotificationsScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: ConstColors.white,
+                              width: 5,
+                            ),
                             color: ConstColors.white,
-                            width: 5,
                           ),
-                          color: ConstColors.white,
-                        ),
-                        padding: EdgeInsets.all(2),
-                        child: Icon(
-                          Icons.notifications_none_outlined,
-                          size: 35,
+                          padding: EdgeInsets.all(2),
+                          child: Icon(
+                            Icons.notifications_none_outlined,
+                            size: 35,
+                          ),
                         ),
                       ),
                       SeparatorWidget.width10(),
@@ -147,36 +167,57 @@ class _PointsScreenState extends State<PointsScreen> {
         0,
       ),
       items: [
+        
         _buildPopupHeader(),
         _buildDividerItem(),
         _buildPopupItem(
-          icon: Icons.access_time_outlined,
+          icon: Icons.qr_code,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Show My QR',
           subtitle: 'Recent actions',
           value: 'activity',
-          onTap: (){
+          onTap: () {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (_) => const MyQRCodeModal(),
             );
-          }
+          },
+        ),
+        _buildPopupItem(
+          icon: Icons.shopping_bag_outlined,
+          iconBg: const Color(0xFFD1FAE5),
+          iconColor: ConstColors.green,
+          title: 'My Shopping Bags',
+          subtitle: 'Circular bags',
+          value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyBagsScreen()),
+            );
+          },
         ),
         _buildPopupItem(
           icon: Icons.access_time_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Activity log',
           subtitle: 'Recent actions',
           value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const ActivityLogScreen()),
+            );
+          },
         ),
         _buildPopupItem(
           icon: Icons.chat_bubble_outline,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Tutorials',
           subtitle: 'How to use',
           value: 'tutorials',
@@ -188,9 +229,23 @@ class _PointsScreenState extends State<PointsScreen> {
           },
         ),
         _buildPopupItem(
+          icon: Icons.eco,
+          iconBg: const Color(0xFFD1FAE5),
+          iconColor: ConstColors.green,
+          title: 'CO2E Report',
+          subtitle: 'Your impact',
+          value: 'activity',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Co2eReportScreen2()),
+            );
+          },
+        ),
+        _buildPopupItem(
           icon: Icons.settings_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Settings',
           subtitle: 'Account, security',
           value: 'settings',
@@ -204,14 +259,14 @@ class _PointsScreenState extends State<PointsScreen> {
         _buildPopupItem(
           icon: Icons.headset_mic_outlined,
           iconBg: const Color(0xFFD1FAE5),
-          iconColor: const Color(0xFF10B981),
+          iconColor: ConstColors.green,
           title: 'Support',
           subtitle: 'Helpdesk',
           value: 'support',
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              MaterialPageRoute(builder: (context) => SupportScreen()),
             );
           },
         ),
@@ -223,6 +278,13 @@ class _PointsScreenState extends State<PointsScreen> {
           subtitle: 'Sign out from app',
           titleColor: const Color(0xFFEF4444),
           value: 'signout',
+          onTap: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+              (route) => true,
+            );
+          },
         ),
       ],
     ).then((value) {
@@ -400,9 +462,9 @@ class _PointsScreenState extends State<PointsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Latest Earnings',
+                'Transactie Overzicht',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF111111),
                 ),
@@ -415,9 +477,9 @@ class _PointsScreenState extends State<PointsScreen> {
                   );
                 },
                 child: Text(
-                  'View All',
+                  'Meer',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: ConstColors.green,
                   ),
@@ -535,9 +597,9 @@ class _PointsScreenState extends State<PointsScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              'ESG pts',
+                              'Ecopunten',
                               style: const TextStyle(
-                                fontSize: 11,
+                                fontSize: 10,
                                 color: Color(0xFF9CA3AF),
                               ),
                             ),
@@ -560,7 +622,7 @@ class _PointsScreenState extends State<PointsScreen> {
     final history = [
       {
         'title': 'Premium Circular Bag',
-        'sub': 'Expired in 5 days',
+        'sub': 'Limited edition premium circular bag',
         'subColor': const Color(0xFFF59E0B),
         'pts': '-100',
         'date': '10 Feb 2026',
@@ -570,7 +632,7 @@ class _PointsScreenState extends State<PointsScreen> {
       },
       {
         'title': 'Premium Circular Bag',
-        'sub': 'Redeemed',
+        'sub': 'Aangeschaft',
         'subColor': const Color(0xFF9CA3AF),
         'pts': '-200',
         'date': '13 Feb 2026',
@@ -580,11 +642,11 @@ class _PointsScreenState extends State<PointsScreen> {
       },
       {
         'title': 'Premium Circular Bag',
-        'sub': 'Expired',
+        'sub': '',
         'subColor': const Color(0xFFEF4444),
-        'pts': '+100',
+        'pts': '-100',
         'date': '10 Feb 2026',
-        'ptsColor': ConstColors.green,
+        'ptsColor': const Color(0xFFEF4444),
         'img':
             'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80',
       },
@@ -598,9 +660,9 @@ class _PointsScreenState extends State<PointsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                'Redeemed',
+                'Aangeschaft',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF111111),
                 ),
@@ -613,9 +675,9 @@ class _PointsScreenState extends State<PointsScreen> {
                   );
                 },
                 child: Text(
-                  'View All',
+                  'Meer',
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
                     color: ConstColors.green,
                   ),
@@ -623,7 +685,23 @@ class _PointsScreenState extends State<PointsScreen> {
               ),
             ],
           ),
+
           const SizedBox(height: 14),
+           buildBagOrderCard(
+            context,
+            BagOrder(
+              orderId: 'ORD-8812',
+              bagName: 'Premium Circular Bag',
+              imageAsset: ImageAsset.bag1,
+              points: 1200,
+              dateOrdered: '05 Jan 2026',
+              courier: 'PostNL Standaard',
+              trackTrace: '3SBOL123456789',
+              locationLabel: 'Packed',
+              deliveryDateLabel: '19 Jan 2026',
+              status: BagOrderStatus.readyForPickup,
+            ),
+          ),
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -697,12 +775,12 @@ class _PointsScreenState extends State<PointsScreen> {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                item['sub'] as String,
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: item['subColor'] as Color,
-                                ),
+                              item['date'] as String,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: Color(0xFF9CA3AF),
                               ),
+                            ),
                             ],
                           ),
                         ),
@@ -726,7 +804,7 @@ class _PointsScreenState extends State<PointsScreen> {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              item['date'] as String,
+                              'Ecopunten',
                               style: const TextStyle(
                                 fontSize: 11,
                                 color: Color(0xFF9CA3AF),

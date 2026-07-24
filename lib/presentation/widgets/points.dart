@@ -92,7 +92,7 @@ class _PointsCardState extends State<PointsCard>  with SingleTickerProviderState
                             ),
                           ),
                           TextSpan(
-                            text: 'ESG points',
+                            text: 'Ecopunten',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,

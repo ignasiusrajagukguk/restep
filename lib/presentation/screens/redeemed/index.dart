@@ -89,7 +89,7 @@ extension StatusProps on RedemptionStatus {
       case RedemptionStatus.readyForPickup:
         return 'Ready for Pickup';
       case RedemptionStatus.redeemed:
-        return 'Redeemed';
+        return 'Aangeschaft';
     }
   }
 
@@ -178,7 +178,7 @@ class RedeemedScreen extends StatelessWidget {
             ),
           ),
           const Text(
-            'Redeemed',
+            'Aangeschaft',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -326,7 +326,7 @@ class RedeemedScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'ESG Points ',
+                        'Ecopunten ',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

@@ -32,7 +32,10 @@ class _ConfirmRedemptionScreenState extends State<ConfirmRedemptionScreen> {
           children: [
             _buildAppBar(context),
             Expanded(
-              child: ProductDetailWidget(imageIndex: image, onImageChanged: (i) => setState(() => image = i)),
+              child: ProductDetailWidget(
+                imageIndex: image,
+                onImageChanged: (i) => setState(() => image = i),
+              ),
             ),
           ],
         ),
@@ -73,7 +76,7 @@ class _ConfirmRedemptionScreenState extends State<ConfirmRedemptionScreen> {
             ),
           ),
           const Text(
-            'Confirm Redemption',
+            'Product Details',
             style: TextStyle(
               fontSize: 17,
               fontWeight: FontWeight.w700,
@@ -182,10 +185,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             child: SizedBox(
               height: 300,
               width: double.infinity,
-              child: Image.asset(
-                _images[widget.imageIndex],
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset(_images[widget.imageIndex], fit: BoxFit.cover),
             ),
           ),
 
@@ -223,31 +223,48 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
           // ── Points + rating row ─────────────────────────
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '100 pts',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: ConstColors.green,
-                ),
+              Row(
+                children: [
+                  const Text(
+                    '100 pts',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: ConstColors.green,
+                    ),
+                  ),
+                  const Text(
+                    ' / ',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: ConstColors.grayMedium20,
+                    ),
+                  ),
+                  const Icon(Icons.star, color: Color(0xffFFA33F), size: 20),
+                  const Text(
+                    '5.0',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: ConstColors.grayMedium20,
+                    ),
+                  ),
+                ],
               ),
-              const Text(
-                ' / ',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: ConstColors.grayMedium20,
-                ),
-              ),
-              const Icon(Icons.star, color: Color(0xffFFA33F), size: 20),
-              const Text(
-                '5.0',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: ConstColors.grayMedium20,
-                ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                spacing: 5,
+                children: [
+                  const Text(
+                    'Supported by:',
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                  Image.asset(ImageAsset.intersport, height: 10),
+                ],
               ),
             ],
           ),
@@ -290,12 +307,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
   // ── Tab bar ──────────────────────────────────────────────
   Widget _buildTabBar() {
-    return Row(
-      children: [
-        _tabItem('Details', 0),
-        _tabItem('Reviews', 1),
-      ],
-    );
+    return Row(children: [_tabItem('Details', 0), _tabItem('Reviews', 1)]);
   }
 
   Widget _tabItem(String label, int index) {
@@ -367,7 +379,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         // Custom Name
         _sectionLabel('Custom Name'),
         const SizedBox(height: 12),
-        _styledTextField(controller: _customNameController, hint: 'Type here...'),
+        _styledTextField(
+          controller: _customNameController,
+          hint: 'Type here...',
+        ),
 
         const SizedBox(height: 24),
 
@@ -375,9 +390,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -390,15 +403,26 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                 ),
               ),
               const SizedBox(height: 16),
-              _PointsRow(label: 'Current Balance', value: '3480', valueColor: greenText),
+              _PointsRow(
+                label: 'Current Balance',
+                value: '3480',
+                valueColor: greenText,
+              ),
               const SizedBox(height: 12),
-              _PointsRow(label: 'Points to Redeem', value: '100', valueColor: greenText),
+              _PointsRow(
+                label: 'Points to Redeem',
+                value: '100',
+                valueColor: greenText,
+              ),
               const Padding(
                 padding: EdgeInsets.symmetric(vertical: 12),
                 child: Divider(color: Color(0xFFEEEEEE)),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFE8F0E8),
                   borderRadius: BorderRadius.circular(10),
@@ -447,11 +471,13 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF3A7D44),
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
               elevation: 0,
             ),
             child: const Text(
-              'Confirm Redemption',
+              'Bestellen',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
             ),
           ),
@@ -468,7 +494,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             style: OutlinedButton.styleFrom(
               foregroundColor: valueColor,
               side: const BorderSide(color: Color(0xFFCCCCCC)),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
             ),
             child: const Text(
               'Cancel',
@@ -555,8 +583,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                     ),
                   ),
                   const SizedBox(height: 2),
-                  Text(review.text,
-                      style: const TextStyle(fontSize: 14, color: _textDark)),
+                  Text(
+                    review.text,
+                    style: const TextStyle(fontSize: 14, color: _textDark),
+                  ),
                   const SizedBox(height: 6),
                   Row(
                     children: [
@@ -580,8 +610,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                     ],
                   ),
                   const SizedBox(height: 4),
-                  Text(review.timeAgo,
-                      style: const TextStyle(fontSize: 12, color: _textLight)),
+                  Text(
+                    review.timeAgo,
+                    style: const TextStyle(fontSize: 12, color: _textLight),
+                  ),
                 ],
               ),
             ),
@@ -595,13 +627,13 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
   // ── Shared helpers ───────────────────────────────────────
   Widget _sectionLabel(String text) => Text(
-        text,
-        style: const TextStyle(
-          fontSize: 14,
-          color: _textLight,
-          fontWeight: FontWeight.w400,
-        ),
-      );
+    text,
+    style: const TextStyle(
+      fontSize: 14,
+      color: _textLight,
+      fontWeight: FontWeight.w400,
+    ),
+  );
 
   Widget _styledDropdown() {
     return Container(
@@ -616,7 +648,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
           isExpanded: true,
           icon: const Icon(Icons.keyboard_arrow_down, color: _textDark),
           style: const TextStyle(
-              color: _textDark, fontSize: 15, fontWeight: FontWeight.w400),
+            color: _textDark,
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+          ),
           dropdownColor: _inputBg,
           borderRadius: BorderRadius.circular(14),
           items: _locations
@@ -646,8 +681,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
           hintText: hint,
           hintStyle: const TextStyle(color: _textLight, fontSize: 15),
           border: InputBorder.none,
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 16,
+          ),
         ),
       ),
     );
@@ -672,14 +709,19 @@ class _PointsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(label,
-            style: const TextStyle(fontSize: 14, color: Color(0xFF5A5A5A))),
+        Text(
+          label,
+          style: const TextStyle(fontSize: 14, color: Color(0xFF5A5A5A)),
+        ),
         const Spacer(),
-        Text(value,
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: valueColor)),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: valueColor,
+          ),
+        ),
       ],
     );
   }
@@ -700,13 +742,42 @@ class _Review {
     required this.avatarColor,
   });
 }
+
 // ── Speciale Aanbiedingen ────────────────────────────────
 Widget _buildSpecialDealsSection() {
   final List<_DealItem> deals = [
-    _DealItem(name: 'Circular Bag',   pts: 80,  originalPts: 100, discount: '-20%', imageUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=200&q=60'),
-    _DealItem(name: 'Eco Sneakers',   pts: 170, originalPts: 200, discount: '-15%', imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=60'),
-    _DealItem(name: 'Reusable Cup',   pts: 35,  originalPts: 50,  discount: '-30%', imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=200&q=60'),
-    _DealItem(name: 'Tote Bag',       pts: 45,  originalPts: 50,  discount: '-10%', imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&q=60'),
+    _DealItem(
+      name: 'Circular Bag',
+      pts: 80,
+      originalPts: 100,
+      discount: '-20%',
+      imageUrl:
+          'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=200&q=60',
+    ),
+    _DealItem(
+      name: 'Eco Sneakers',
+      pts: 170,
+      originalPts: 200,
+      discount: '-15%',
+      imageUrl:
+          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&q=60',
+    ),
+    _DealItem(
+      name: 'Reusable Cup',
+      pts: 35,
+      originalPts: 50,
+      discount: '-30%',
+      imageUrl:
+          'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=200&q=60',
+    ),
+    _DealItem(
+      name: 'Tote Bag',
+      pts: 45,
+      originalPts: 50,
+      discount: '-10%',
+      imageUrl:
+          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&q=60',
+    ),
   ];
 
   return Column(
@@ -718,13 +789,23 @@ Widget _buildSpecialDealsSection() {
         children: [
           const Text(
             'Speciale Aanbiedingen',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: valueColor),
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: valueColor,
+            ),
           ),
           GestureDetector(
-            onTap: () { /* navigate to all deals */ },
+            onTap: () {
+              /* navigate to all deals */
+            },
             child: const Text(
-              'See more',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, color: greenText),
+              'Meer',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                color: greenText,
+              ),
             ),
           ),
         ],
@@ -767,7 +848,8 @@ Widget _buildDealCard(_DealItem deal) {
               ),
             ),
             Positioned(
-              top: 6, left: 6,
+              top: 6,
+              left: 6,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                 decoration: BoxDecoration(
@@ -776,7 +858,11 @@ Widget _buildDealCard(_DealItem deal) {
                 ),
                 child: Text(
                   deal.discount,
-                  style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
@@ -785,7 +871,11 @@ Widget _buildDealCard(_DealItem deal) {
         const SizedBox(height: 8),
         Text(
           deal.name,
-          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: valueColor),
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: valueColor,
+          ),
           overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 3),
@@ -793,7 +883,11 @@ Widget _buildDealCard(_DealItem deal) {
           children: [
             Text(
               '${deal.pts} pts',
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: greenText),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: greenText,
+              ),
             ),
             const SizedBox(width: 5),
             Text(
@@ -815,5 +909,11 @@ Widget _buildDealCard(_DealItem deal) {
 class _DealItem {
   final String name, imageUrl, discount;
   final int pts, originalPts;
-  const _DealItem({required this.name, required this.pts, required this.originalPts, required this.discount, required this.imageUrl});
+  const _DealItem({
+    required this.name,
+    required this.pts,
+    required this.originalPts,
+    required this.discount,
+    required this.imageUrl,
+  });
 }

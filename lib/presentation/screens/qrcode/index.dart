@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:restep/common/constants/collors.dart';
+import 'package:restep/config/app_asset.dart';
 import 'package:restep/presentation/screens/qrcode/app_top_bar.dart';
 import 'package:restep/presentation/screens/qrcode/entities/scanner_entity.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -35,15 +36,15 @@ class ScannerState {
   });
 
   factory ScannerState.initial() => const ScannerState(
-        mode: ScanMode.qr,
-        torchOn: false,
-        isLooking: false,
-        recentScans:[],
-        showSuccess:false,
-        showManual: false,
-        result: null,
-        manualInput: '',
-      );
+    mode: ScanMode.qr,
+    torchOn: false,
+    isLooking: false,
+    recentScans: [],
+    showSuccess: false,
+    showManual: false,
+    result: null,
+    manualInput: '',
+  );
 
   ScannerState copyWith({
     ScanMode? mode,
@@ -59,8 +60,8 @@ class ScannerState {
       mode: mode ?? this.mode,
       torchOn: torchOn ?? this.torchOn,
       isLooking: isLooking ?? this.isLooking,
-      recentScans:recentScans??this.recentScans,
-      showSuccess:showSuccess?? this.showSuccess,
+      recentScans: recentScans ?? this.recentScans,
+      showSuccess: showSuccess ?? this.showSuccess,
       showManual: showManual ?? this.showManual,
       result: result ?? this.result,
       manualInput: manualInput ?? this.manualInput,
@@ -89,10 +90,7 @@ class ScannerController extends ChangeNotifier {
   }
 
   void setMode(ScanMode mode) {
-    _update(_state.copyWith(
-      mode: mode,
-      showManual: mode == ScanMode.manual,
-    ));
+    _update(_state.copyWith(mode: mode, showManual: mode == ScanMode.manual));
   }
 
   // ─────────────────────────
@@ -104,10 +102,12 @@ class ScannerController extends ChangeNotifier {
 
     await Future.delayed(const Duration(milliseconds: 800));
 
-    _update(_state.copyWith(
-      isLooking: false,
-      result: value, // <-- replace with real API result
-    ));
+    _update(
+      _state.copyWith(
+        isLooking: false,
+        result: value, // <-- replace with real API result
+      ),
+    );
   }
 
   void clearResult() {
@@ -119,18 +119,20 @@ class ScannerController extends ChangeNotifier {
   // ─────────────────────────
 
   void manualKeyPress(String key) {
-    _update(_state.copyWith(
-      manualInput: _state.manualInput + key,
-    ));
+    _update(_state.copyWith(manualInput: _state.manualInput + key));
   }
 
   void manualBackspace() {
     if (_state.manualInput.isEmpty) return;
 
-    _update(_state.copyWith(
-      manualInput:
-          _state.manualInput.substring(0, _state.manualInput.length - 1),
-    ));
+    _update(
+      _state.copyWith(
+        manualInput: _state.manualInput.substring(
+          0,
+          _state.manualInput.length - 1,
+        ),
+      ),
+    );
   }
 
   void manualConfirm() {
@@ -139,6 +141,7 @@ class ScannerController extends ChangeNotifier {
     scan(_state.manualInput);
   }
 }
+
 class ScannerPage extends StatefulWidget {
   const ScannerPage({super.key});
 
@@ -191,8 +194,6 @@ class _ScannerPageState extends State<ScannerPage> {
     );
   }
 }
-
-
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Scan Screen — viewfinder state
@@ -315,7 +316,7 @@ class _ModePills extends StatelessWidget {
       child: Row(
         children: [
           _Pill(
-            label: 'QR / Barcode',
+            label: 'Scan',
             active: mode == ScanMode.qr,
             onTap: () => ctrl.setMode(ScanMode.qr),
           ),
@@ -327,7 +328,7 @@ class _ModePills extends StatelessWidget {
           // ),
           const SizedBox(width: 8),
           _Pill(
-            label: 'Manual',
+            label: 'Show',
             active: mode == ScanMode.manual,
             onTap: () => ctrl.setMode(ScanMode.manual),
           ),
@@ -479,14 +480,23 @@ class _ViewfinderState extends State<_Viewfinder>
 
                 // ── Real camera feed ──────────────────────────────────
                 MobileScanner(
-        onDetect: (capture) {
-          final barcode = capture.barcodes.first;
-          final value = barcode.rawValue;
-          if (value != null) {
-            Navigator.of(context).pop(value); // return scanned value
-          }
-        },
-      ),
+                  controller: _cameraCtrl,
+                  onDetect: (capture) {
+                    if (widget.isLooking || widget.disabled) return;
+                    if (capture.barcodes.isEmpty) return;
+
+                    final barcode = capture.barcodes.first;
+                    final value = barcode.rawValue;
+
+                    if (value == null || value.isEmpty) return;
+                    if (value == _lastScanned) return;
+
+                    _lastScanned = value;
+
+                    HapticFeedback.mediumImpact();
+                    widget.onDetect(value);
+                  },
+                ),
 
                 // ── Dark overlay dimming the area outside the frame ───
                 // (the ClipRRect already clips to the square, so this
@@ -847,22 +857,13 @@ class _SuccessOverlay extends StatelessWidget {
   }
 
   ({Color text, String label}) _statusStyle(ScanResultStatus s) => switch (s) {
-    ScanResultStatus.inTransit => (
-      text: Colors.green,
-      label: 'In transit',
-    ),
-    ScanResultStatus.inStorage => (
-      text: Colors.amber,
-      label: 'In storage',
-    ),
+    ScanResultStatus.inTransit => (text: Colors.green, label: 'In transit'),
+    ScanResultStatus.inStorage => (text: Colors.amber, label: 'In storage'),
     ScanResultStatus.damaged => (
       text: const Color(0xFFE24B4A),
       label: 'Damaged',
     ),
-    ScanResultStatus.delivered => (
-      text: Colors.green,
-      label: 'Delivered',
-    ),
+    ScanResultStatus.delivered => (text: Colors.green, label: 'Delivered'),
   };
 
   @override
@@ -887,7 +888,6 @@ class _SuccessOverlay extends StatelessWidget {
       // if (result.type.toLowerCase() == 'empties') {
       //   bodyUI = EmptiesScan(state: state, ctrl: ctrl);
       // }
-
     }
 
     return AnimatedSlide(
@@ -1027,84 +1027,193 @@ class _ManualOverlayState extends State<_ManualOverlay> {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Text(
-                          'Enter ID manually',
-                          style: tt.titleMedium?.copyWith(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: const Color(0xFFF0F2F5),
-                          ),
-                        ),
+                        // Text(
+                        //   'Enter ID manually',
+                        //   style: tt.titleMedium?.copyWith(
+                        //     fontSize: 18,
+                        //     fontWeight: FontWeight.w700,
+                        //     color: const Color(0xFFF0F2F5),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
 
                   // Display with blinking cursor
+                  // Container(
+                  //   margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                  //   padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+                  //   decoration: BoxDecoration(
+                  //     color: const Color(0xFF1E232B),
+                  //     borderRadius: BorderRadius.circular(12),
+                  //     border: Border.all(
+                  //       color: Colors.white.withValues(alpha: 0.14),
+                  //     ),
+                  //   ),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       // const Text(
+                  //       //   'PACKAGE ID',
+                  //       //   style: TextStyle(
+                  //       //     fontSize: 11,
+                  //       //     fontWeight: FontWeight.w600,
+                  //       //     letterSpacing: 0.07,
+                  //       //     color: Color(0xFF4A5565),
+                  //       //   ),
+                  //       // ),
+                  //       // const SizedBox(height: 6),
+                  //       Row(
+                  //         children: [
+                  //           Text(
+                  //             widget.state.manualInput,
+                  //             style: const TextStyle(
+                  //               fontFamily: 'monospace',
+                  //               fontSize: 28,
+                  //               fontWeight: FontWeight.w500,
+                  //               color: Color(0xFFF0F2F5),
+                  //               letterSpacing: 2,
+                  //             ),
+                  //           ),
+                  //           ValueListenableBuilder<bool>(
+                  //             valueListenable: _cursorCtrl,
+                  //             builder: (_, visible, __) => AnimatedOpacity(
+                  //               opacity: visible ? 1.0 : 0.0,
+                  //               duration: const Duration(milliseconds: 100),
+                  //               child: Container(
+                  //                 width: 2,
+                  //                 height: 28,
+                  //                 margin: const EdgeInsets.only(left: 2),
+                  //                 color: ConstColors.green,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-                    padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1E232B),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: Colors.white.withValues(alpha: 0.14),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // const Text(
-                        //   'PACKAGE ID',
-                        //   style: TextStyle(
-                        //     fontSize: 11,
-                        //     fontWeight: FontWeight.w600,
-                        //     letterSpacing: 0.07,
-                        //     color: Color(0xFF4A5565),
-                        //   ),
-                        // ),
-                        // const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Text(
-                              widget.state.manualInput,
-                              style: const TextStyle(
-                                fontFamily: 'monospace',
-                                fontSize: 28,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFFF0F2F5),
-                                letterSpacing: 2,
-                              ),
-                            ),
-                            ValueListenableBuilder<bool>(
-                              valueListenable: _cursorCtrl,
-                              builder: (_, visible, __) => AnimatedOpacity(
-                                opacity: visible ? 1.0 : 0.0,
-                                duration: const Duration(milliseconds: 100),
-                                child: Container(
-                                  width: 2,
-                                  height: 28,
-                                  margin: const EdgeInsets.only(left: 2),
-                                  color: ConstColors.green,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              padding: const EdgeInsets.all(28),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 8),
+                  const Text(
+                    'QR Code',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: ConstColors.green,
                     ),
                   ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Present this QR code at the store when\nto get some points from your purchase',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF6B6B6B),
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Image.asset(ImageAsset.dummyQr, height: 200),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Member ID',
+                    style: TextStyle(fontSize: 13, color: Color(0xFF6B6B6B)),
+                  ),
+                  const SizedBox(height: 4),
+                  const Text(
+                    'VCH-8291-PLS',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: ConstColors.dark40,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  buildInstructions(),
+                ],
+              ),
+            ),
 
                   // Keypad
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: _Keypad(ctrl: widget.ctrl),
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(16),
+                  //     child: _Keypad(ctrl: widget.ctrl),
+                  //   ),
+                  // ),
                 ],
               ),
             )
           : const SizedBox.expand(child: ColoredBox(color: Colors.transparent)),
+    );
+  }
+
+
+  Widget buildInstructions() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: ConstColors.green10,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Instructions',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: ConstColors.green,
+            ),
+          ),
+          const SizedBox(height: 10),
+          _instructionItem(
+            'Show this QR code at the store to get points from your purchase',
+          ),
+          _instructionItem('Make sure to present it before validation'),
+          _instructionItem('Every purchase can scan only scan once'),
+        ],
+      ),
+    );
+  }
+
+  Widget _instructionItem(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 5, right: 8),
+            child: CircleAvatar(
+              radius: 3,
+              backgroundColor: ConstColors.green10,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 13,
+                color: ConstColors.green,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1190,6 +1299,7 @@ class _Keypad extends StatelessWidget {
       ],
     );
   }
+
 }
 
 class _Key extends StatelessWidget {
